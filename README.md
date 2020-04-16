@@ -18,7 +18,7 @@ don't try to use pngs, they don't behave nicely
  
 the included dataset is my artwork; you can find fullsize images for download at esherymack.deviantart.com
  
-* on that note, all included images are protected under a Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License, you can find out more about that (here)[https://creativecommons.org/licenses/by-nc-nd/3.0/]
+* on that note, all included images are protected under a Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License, you can find out more about that [here](https://creativecommons.org/licenses/by-nc-nd/3.0/)
   
 this code is a trash heap
  
