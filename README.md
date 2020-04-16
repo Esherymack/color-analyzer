@@ -12,25 +12,23 @@ you need some libraries:
  * skimage
  * colorsys
 
- - change the `image_data_directory` global var if you want to use a different directory for images
+change the `image_data_directory` global var if you want to use a different directory for images
  
- - don't try to use pngs, they don't behave nicely
+don't try to use pngs, they don't behave nicely
  
- - the included dataset is my artwork; you can find fullsize images for download at esherymack.deviantart.com
+the included dataset is my artwork; you can find fullsize images for download at esherymack.deviantart.com
  
- - on that note, all included images are protected under a Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License, you can find out more about that (here)[https://creativecommons.org/licenses/by-nc-nd/3.0/]
+* on that note, all included images are protected under a Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License, you can find out more about that (here)[https://creativecommons.org/licenses/by-nc-nd/3.0/]
   
- - this code is a trash heap
+this code is a trash heap
  
- - honestly the class is a trash heap
+honestly the class is a trash heap
  
- - i don't know what i'm trying to accomplish with it but here you go
+i don't know what i'm trying to accomplish with it but here you go
    
  
- references: 
+references: 
  
- https://towardsdatascience.com/color-identification-in-images-machine-learning-application-b26e770c4c71
- 
- https://www.dataquest.io/blog/tutorial-colors-image-clustering-python/
- 
- https://realpython.com/python-opencv-color-spaces/
+* https://towardsdatascience.com/color-identification-in-images-machine-learning-application-b26e770c4c71
+* https://www.dataquest.io/blog/tutorial-colors-image-clustering-python/
+* https://realpython.com/python-opencv-color-spaces/
