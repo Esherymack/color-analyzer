@@ -9,9 +9,9 @@ from skimage.color import rgb2lab, deltaE_cie76, rgb2hsv
 import os
 import colorsys
 import operator
-from pprint import pprint
+import csv
 
-image_data_directory = "./test"
+image_data_directory = "./data"
 
 # Colors to try and match
 colors_dict = {
@@ -127,10 +127,10 @@ def determinedColorFamily(hue, sat, val):
     elif 0 <= val < 15:
         families_dict["black"] += 1
         return "black"
-    elif 99 <= val <= 100:
+    elif 99 <= val <= 100 and 0 <= sat < 5:
         families_dict["white"] += 1
         return "white"
-    elif 50 <= sat <= 100:
+    elif 5 <= sat <= 100:
         if 0 <= hue < 15:
             families_dict["red"] += 1
             return "red"
@@ -203,7 +203,7 @@ def determinedColorFamily(hue, sat, val):
         elif 345 <= hue <= 360:
             families_dict["cool red"] += 1
             return "cool red"
-    elif 0 <= sat < 50:
+    elif 0 <= sat < 5:
         families_dict["grey"] += 1
         return "grey"
 
@@ -315,15 +315,23 @@ def get_colors(image, ncolors, fname):
 
 def main():
     i = 0
+    print(os.getcwd())
     for filename in os.listdir(image_data_directory):
         if filename.endswith(".jpg"):
             image = get_image(f'{image_data_directory}/{filename}')
+            print("------------------------------")
             print(f"Input image: {filename}")
             print(f"Shape: {image.shape}")
         
             get_colors(image, 10, i)
 
+            print("------------------------------")
+
             i+=1
+
+    f = open("data.txt", "w")
+    f.write(str(families_dict))
+    f.close()
 
     names = list(families_dict.keys())
     values = list(families_dict.values())
@@ -356,10 +364,12 @@ def main():
               (0.988, 0, 0.482, 1),
               (0.957, 0, 0.243, 1)]
 
+    plt.figure(figsize = (15, 8))
+
     for i in range(len(names)):
         plt.bar(i, values[i], tick_label = names[i], color = colors[i], edgecolor = "black")
 
-    plt.title("Total number of color schemes that fall into broad color family categories (n = 452)")
+    plt.title("Total number of color schemes that fall into broad color family categories (n = 451)")
     plt.xticks(range(len(names)), names, rotation = 45, fontsize = 8)
     plt.yticks(fontsize = 8)
     ax = plt.gca()
@@ -367,6 +377,7 @@ def main():
     ax.xaxis.grid(True)
     ax.yaxis.set_major_locator(MaxNLocator(integer = True))
 
+    plt.tight_layout()
     plt.savefig("./analyzed2/final_analysis.jpg")
 
 main()
