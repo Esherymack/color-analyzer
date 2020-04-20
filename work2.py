@@ -298,7 +298,7 @@ def get_colors(image, ncolors, fname):
         rgb_colors = [ordered_colors[i] for i in counts.keys()]
 
         dictionary = dict(zip(hex_colors, counts.values()))
-        # dictionary = {k: v for k, v in sorted(dictionary.items(), key = lambda item: item[1])}
+
         dictionary = dict(sorted(dictionary.items(), key = operator.itemgetter(1), reverse = True))
         for k, v in dictionary.items():
             print(f"Color: {k}; Count: {v}")
