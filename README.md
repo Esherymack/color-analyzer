@@ -6,7 +6,7 @@
 
 ## Source of Data
 
-All datasets were sourced from the author's own home computer. 
+All datasets were sourced from the author's own home computer.
 
 All artworks present and analyzed are property of Madison Tibbett, (c) 2010-2020. All artworks presented are protected under a Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License. You can read more about the licensing [here](https://creativecommons.org/licenses/by-nc-nd/3.0/).
 
@@ -22,7 +22,7 @@ The processing code is not included in this report due to the weight of processi
 
 ### Purpose of the project
 
-I have been creating fractal artwork for over ten years now, and I was curious as to any particular trends in my use of color over the decade. I decided then to utilize a KMeans clustering algorithm to determine the most common colors in a given image, find the peak color, match it to a named color, and then classify it based on that color's color family. I then graphed the results. 
+I have been creating fractal artwork for over ten years now, and I was curious as to any particular trends in my use of color over the decade. I decided then to utilize a KMeans clustering algorithm to determine the most common colors in a given image, find the peak color, match it to a named color, and then classify it based on that color's color family. I then graphed the results.
 
 ### Libraries used for processing:
 For processing the data, I made use of several data-science specific libraries, including:
@@ -63,7 +63,7 @@ In order to open images, I used a for loop.
             print("------------------------------")
             print(f"Input image: {filename}")
             print(f"Shape: {image.shape}")
-        
+
             get_colors(image, 10, i)
 
             print("------------------------------")
@@ -80,11 +80,11 @@ def get_colors(image, ncolors, fname):
         # Resizing images to lessen pixel count,
         # which reduces the time needed to extract
         # colors from image.
-        modified_image = cv2.resize(image, (600, 400), 
+        modified_image = cv2.resize(image, (600, 400),
             interpolation = cv2.INTER_AREA)
         modified_image = modified_image.reshape
             (modified_image.shape[0] * modified_image.shape[1], 3)
-        
+
         clf = KMeans(n_clusters = ncolors)
         labels = clf.fit_predict(modified_image)
 
@@ -108,19 +108,19 @@ def get_colors(image, ncolors, fname):
 
         plt.figure(figsize = (8, 6))
         plt.pie(counts.values(), labels=hex_colors, colors = hex_colors)
-            
+
         plt.savefig(f"./analyzed2/piecharts/{fname}.jpg")
         plt.close()
         return rgb_colors
 ```
 
-Within this function, the pie charts in the attached appendix are created. Each pie chart represents the *n* most common colors in a given image as selected by the KMeans algorithm. 
+Within this function, the pie charts in the attached appendix are created. Each pie chart represents the *n* most common colors in a given image as selected by the KMeans algorithm.
 
 KMeans is a sort-of-random algorithm in that it will pick a relatively arbitrary location in the image and work from there. This means that there sometimes is a fluctuation in the actual counts of colors. While I was testing on a smaller dataset (1 to 5 images at a time), I noticed that the fluctuations would happen, but were relatively infrequent, which gave me confidence. However, to offset this slight statistical issue, I ran each test 5 times. This is reflected in the appendix.
 
 ### The second task
 
-The second task after getting the most popular colours in an image was to find the "peak" color. This is a simple matter of picking the highest-counted color in the image. 
+The second task after getting the most popular colours in an image was to find the "peak" color. This is a simple matter of picking the highest-counted color in the image.
 
 I then proceeded to match each "peak" color to a "named" color. The "named" colors were pulled from a massive list of color names and hex values found on Wikipedia. You can view these many lists [here](https://en.wikipedia.org/wiki/Lists_of_colors).
 
@@ -128,11 +128,11 @@ I simply did this for my own amusement. I like when colors have names.
 
 ```py
 def Peak(peaked_color, fname):
-    r = [int(hex[0:2], 16) for hex in hex_rgb_colors] 
+    r = [int(hex[0:2], 16) for hex in hex_rgb_colors]
     # Red elements
-    g = [int(hex[2:4], 16) for hex in hex_rgb_colors] 
+    g = [int(hex[2:4], 16) for hex in hex_rgb_colors]
     # Green elements
-    b = [int(hex[4:6], 16) for hex in hex_rgb_colors] 
+    b = [int(hex[4:6], 16) for hex in hex_rgb_colors]
     # Blue elements
 
     r = np.asarray(r, np.uint8)
@@ -143,22 +143,22 @@ def Peak(peaked_color, fname):
 
     lab = rgb2lab(rgb)
 
-    peaked_rgb = np.asarray([int(peaked_color[1:3], 16), 
-    int(peaked_color[3:5], 16,), int(peaked_color[5:7], 
+    peaked_rgb = np.asarray([int(peaked_color[1:3], 16),
+    int(peaked_color[3:5], 16,), int(peaked_color[5:7],
         16)], np.uint8)
-    peaked_rgb = np.dstack((peaked_rgb[0], peaked_rgb[1], 
+    peaked_rgb = np.dstack((peaked_rgb[0], peaked_rgb[1],
         peaked_rgb[2]))
     peaked_lab = rgb2lab(peaked_rgb)
 
     # Compute Euclidean distance
-    lab_dist = ((lab[:,:,0] - peaked_lab[:,:,0])**2 + 
-        (lab[:,:,1] - peaked_lab[:,:,1])**2 + (lab[:,:,2] - 
+    lab_dist = ((lab[:,:,0] - peaked_lab[:,:,0])**2 +
+        (lab[:,:,1] - peaked_lab[:,:,1])**2 + (lab[:,:,2] -
         peaked_lab[:,:,2])**2)**0.5
 
     # Get index of min distance
     min_index = lab_dist.argmin()
 
-    # Get the hex string of the color with the minimum Euclidean distance 
+    # Get the hex string of the color with the minimum Euclidean distance
     peaked_closest_hex = hex_rgb_colors[min_index]
 
     # Get the color name from the dictionary
@@ -171,22 +171,22 @@ def Peak(peaked_color, fname):
     print(f"Peaked color name: {peaked_color_name}")
 
     h, s, v = RGB2HSV(peaked_closest_hex)
-    print(f"The top color is {peaked_color_name}. 
+    print(f"The top color is {peaked_color_name}.
         Its HSV is {h}, {s}, {v}.")
     colorFamily = determinedColorFamily(h, s, v)
-    print(f"The determined color family of 
+    print(f"The determined color family of
         {peaked_color_name} is {colorFamily}")
 
-    print(f"R: {peaked_color_rgb[0]}, G: 
+    print(f"R: {peaked_color_rgb[0]}, G:
         {peaked_color_rgb[1]}, B: {peaked_color_rgb[2]}")
-    print(f"R: {closest_match[0]}, G: {closest_match[1]}, 
+    print(f"R: {closest_match[0]}, G: {closest_match[1]},
         B: {closest_match[2]}")
 
     fig, ax = plt.subplots(nrows=1, ncols=2)
 
     Z = np.vstack([peaked_color_rgb[0], peaked_color_rgb[1],
         peaked_color_rgb[2]])
-    Y = np.vstack([closest_match[0], closest_match[1], 
+    Y = np.vstack([closest_match[0], closest_match[1],
         closest_match[2]])
 
     ax[0].set_title(f'Color from image: {peaked_color_rgb[0]}
@@ -224,13 +224,13 @@ def RGB2HSV(color):
     g = g / 255
     b = b / 255
 
-    # calculate a few basic values; the max of r, g, b, 
+    # calculate a few basic values; the max of r, g, b,
     # the min value, and the difference between the two (chroma)
     maxRGB = max(r, g, b)
     minRGB = min(r, g, b)
 
     chroma = maxRGB - minRGB
-    
+
     # value (brightness) is easiest to calculate,
     # it's simply the highest value among the r, g, b components
     # multiply by 100 to turn the decimal into a percent
@@ -250,9 +250,9 @@ def RGB2HSV(color):
     computedSaturation = 100 * (chroma/maxRGB)
 
     # Calculate hue
-    # Hue is calculated via "chromacity" represented as a 
+    # Hue is calculated via "chromacity" represented as a
     #    2D hexagon, divided into six 60-deg sectors
-    # we calculate the bisecting angle as a value 0 <= x < 6, 
+    # we calculate the bisecting angle as a value 0 <= x < 6,
     #    which represents which protion
     # of the sector the line falls on
     if r == minRGB:
@@ -262,7 +262,7 @@ def RGB2HSV(color):
     else:
         h = 5 - ((b - r) / chroma)
 
-    # After we have each sector position, we multiply it by 
+    # After we have each sector position, we multiply it by
     # the size of each sector's arc to obtain the angle in degrees
     computedHue = 60 * h
 
@@ -409,4 +409,3 @@ And the final counts, since it may be a bit difficult to determine just from loo
 * Cool Red: 16
 
 Overall, would I say I agree with these results? Yeah. I tend to use a lot of dark colours, and in my classifications I did cluster anything that I deemed "very very dark" to be "black." This is a general assumption that I feel many viewers may make.
-
