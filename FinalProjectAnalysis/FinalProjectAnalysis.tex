@@ -1,0 +1,6773 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    \usepackage{pdflscape}
+    \usepackage{placeins}
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{FinalProjectAnalysis}
+    
+    
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{analysis-of-colors-present-in-fractal-artwork}{%
+\section{Analysis of Colors Present in Fractal
+Artwork}\label{analysis-of-colors-present-in-fractal-artwork}}
+
+\hypertarget{cs496---special-topics}{%
+\subsection{CS496 - Special Topics}\label{cs496---special-topics}}
+
+\hypertarget{by-madison-tibbett}{%
+\subsubsection{by Madison Tibbett}\label{by-madison-tibbett}}
+
+\hypertarget{source-of-data}{%
+\subsection{Source of Data}\label{source-of-data}}
+
+All datasets were sourced from the author's own home computer.
+
+All artworks present and analyzed are property of Madison Tibbett, (c)
+2010-2020. All artworks presented are protected under a Creative Commons
+Attribution-Noncommercial-No Derivative Works 3.0 License. You can read
+more about the licensing
+\href{https://creativecommons.org/licenses/by-nc-nd/3.0/}{here}.
+
+All processing code for this project can be found on
+\href{https://github.com/Esherymack/color-analyzer}{GitHub}, where it is
+covered by the Unlicense. All artworks retain their Creative Commons
+licensing despite the Unlicense on the codebase.
+
+The processing code is not included in this report due to the weight of
+processing the image data.
+
+\hypertarget{resources}{%
+\subsubsection{Resources}\label{resources}}
+
+\begin{itemize}
+\tightlist
+\item
+  https://towardsdatascience.com/color-identification-in-images-machine-learning-application-b26e770c4c71
+\item
+  https://www.dataquest.io/blog/tutorial-colors-image-clustering-python/
+\item
+  https://realpython.com/python-opencv-color-spaces/
+\end{itemize}
+
+\hypertarget{purpose-of-the-project}{%
+\subsubsection{Purpose of the project}\label{purpose-of-the-project}}
+
+I have been creating fractal artwork for over ten years now, and I was
+curious as to any particular trends in my use of color over the decade.
+I decided then to utilize a KMeans clustering algorithm to determine the
+most common colors in a given image, find the peak color, match it to a
+named color, and then classify it based on that color's color family. I
+then graphed the results.
+
+\hypertarget{libraries-used-for-processing}{%
+\subsubsection{Libraries used for
+processing:}\label{libraries-used-for-processing}}
+
+For processing the data, I made use of several data-science specific
+libraries, including: 
+\begin{itemize}
+\tightlist
+\item \href{https://scikit-learn.org/stable/}{sklearn}
+\item \href{https://matplotlib.org/}{matplotlib} 
+\item \href{https://numpy.org/}{numpy} 
+\item \href{https://opencv.org/}{opencv2} 
+\item \href{https://scikit-image.org/}{scikit-image}
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c+c1}{\PYZsh{} The following magic is required to display graphs and charts}
+        \PY{c+c1}{\PYZsh{} inline with Jupyter.}
+        \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+        
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{cv2}
+        \PY{k+kn}{import} \PY{n+nn}{os}
+        
+        \PY{c+c1}{\PYZsh{} not necessary, but I enjoy fivethirtyeight styling over}
+        \PY{c+c1}{\PYZsh{} matplotlib default.}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{style}\PY{o}{.}\PY{n}{use}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{fivethirtyeight}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \hypertarget{the-first-task}{%
+\subsubsection{The first task}\label{the-first-task}}
+
+The first task in processing my images was to actually get a KMeans
+algorithm clustering colors in any given image. To do this, I opted to
+use the KMeans methods built-in to sklearn.
+
+In order to open images, I used a for loop.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ i }\OperatorTok{=} \DecValTok{0}
+    \BuiltInTok{print}\NormalTok{(os.getcwd())}
+    \ControlFlowTok{for}\NormalTok{ filename }\KeywordTok{in}\NormalTok{ os.listdir(image_data_directory):}
+        \ControlFlowTok{if}\NormalTok{ filename.endswith(}\StringTok{".jpg"}\NormalTok{):}
+\NormalTok{            image }\OperatorTok{=}\NormalTok{ get_image(}\SpecialStringTok{f'}\SpecialCharTok{\{}\NormalTok{image_data_directory}\SpecialCharTok{\}}\SpecialStringTok{/}\SpecialCharTok{\{}\NormalTok{filename}\SpecialCharTok{\}}\SpecialStringTok{'}\NormalTok{)}
+            \BuiltInTok{print}\NormalTok{(}\StringTok{"------------------------------"}\NormalTok{)}
+            \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"Input image: }\SpecialCharTok{\{}\NormalTok{filename}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+            \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"Shape: }\SpecialCharTok{\{}\NormalTok{image}\SpecialCharTok{.}\NormalTok{shape}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+        
+\NormalTok{            get_colors(image, }\DecValTok{10}\NormalTok{, i)}
+
+            \BuiltInTok{print}\NormalTok{(}\StringTok{"------------------------------"}\NormalTok{)}
+
+\NormalTok{            i}\OperatorTok{+=}\DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+Within the for loop, a function called \texttt{get\_colors()} actually
+handles running the algorithm. This loop steps through a given directory
+and processes each image individually; I debated multithreading, but not
+only does sklearn's machine learning algorithms not work well with
+Python's built-in task managing library, it already seems to be mildly
+multithreaded as running the main work script used 50\% of my computer's
+processing power. I also am a lazy programmer, and didn't feel like
+refactoring my code to be multithreaded after writing it.
+
+The \texttt{get\_colors()} method is as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ get_colors(image, ncolors, fname):}
+        \CommentTok{# Resizing images to lessen pixel count,}
+        \CommentTok{# which reduces the time needed to extract}
+        \CommentTok{# colors from image.}
+\NormalTok{        modified_image }\OperatorTok{=}\NormalTok{ cv2.resize(image, (}\DecValTok{600}\NormalTok{, }\DecValTok{400}\NormalTok{), }
+\NormalTok{            interpolation }\OperatorTok{=}\NormalTok{ cv2.INTER_AREA)}
+\NormalTok{        modified_image }\OperatorTok{=}\NormalTok{ modified_image.reshape}
+\NormalTok{            (modified_image.shape[}\DecValTok{0}\NormalTok{] }\OperatorTok{*}\NormalTok{ modified_image.shape[}\DecValTok{1}\NormalTok{], }\DecValTok{3}\NormalTok{)}
+        
+\NormalTok{        clf }\OperatorTok{=}\NormalTok{ KMeans(n_clusters }\OperatorTok{=}\NormalTok{ ncolors)}
+\NormalTok{        labels }\OperatorTok{=}\NormalTok{ clf.fit_predict(modified_image)}
+
+\NormalTok{        counts }\OperatorTok{=}\NormalTok{ Counter(labels)}
+
+\NormalTok{        center_colors }\OperatorTok{=}\NormalTok{ clf.cluster_centers_}
+
+\NormalTok{        ordered_colors }\OperatorTok{=}\NormalTok{ [center_colors[i] }\ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in}\NormalTok{ counts.keys()]}
+\NormalTok{        hex_colors }\OperatorTok{=}\NormalTok{ [RGB2HEX(ordered_colors[i]) }\ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in}\NormalTok{ counts.keys()]}
+\NormalTok{        rgb_colors }\OperatorTok{=}\NormalTok{ [ordered_colors[i] }\ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in}\NormalTok{ counts.keys()]}
+
+\NormalTok{        dictionary }\OperatorTok{=} \BuiltInTok{dict}\NormalTok{(}\BuiltInTok{zip}\NormalTok{(hex_colors, counts.values()))}
+
+\NormalTok{        dictionary }\OperatorTok{=} \BuiltInTok{dict}\NormalTok{(}\BuiltInTok{sorted}\NormalTok{(dictionary.items(),}
+\NormalTok{            key }\OperatorTok{=}\NormalTok{ operator.itemgetter(}\DecValTok{1}\NormalTok{), reverse }\OperatorTok{=} \VariableTok{True}\NormalTok{))}
+        \ControlFlowTok{for}\NormalTok{ k, v }\KeywordTok{in}\NormalTok{ dictionary.items():}
+            \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"Color: }\SpecialCharTok{\{k\}}\SpecialStringTok{; Count: }\SpecialCharTok{\{v\}}\SpecialStringTok{"}\NormalTok{)}
+
+\NormalTok{        hexes }\OperatorTok{=} \BuiltInTok{list}\NormalTok{(dictionary.keys())}
+\NormalTok{        Peak(hexes[}\DecValTok{0}\NormalTok{], fname)}
+
+\NormalTok{        plt.figure(figsize }\OperatorTok{=}\NormalTok{ (}\DecValTok{8}\NormalTok{, }\DecValTok{6}\NormalTok{))}
+\NormalTok{        plt.pie(counts.values(), labels}\OperatorTok{=}\NormalTok{hex_colors, colors }\OperatorTok{=}\NormalTok{ hex_colors)}
+            
+\NormalTok{        plt.savefig(}\SpecialStringTok{f"./analyzed2/piecharts/}\SpecialCharTok{\{}\NormalTok{fname}\SpecialCharTok{\}}\SpecialStringTok{.jpg"}\NormalTok{)}
+\NormalTok{        plt.close()}
+        \ControlFlowTok{return}\NormalTok{ rgb_colors}
+\end{Highlighting}
+\end{Shaded}
+
+Within this function, the pie charts in the attached appendix are
+created. Each pie chart represents the \emph{n} most common colors in a
+given image as selected by the KMeans algorithm.
+
+KMeans is a sort-of-random algorithm in that it will pick a relatively
+arbitrary location in the image and work from there. This means that
+there sometimes is a fluctuation in the actual counts of colors. While I
+was testing on a smaller dataset (1 to 5 images at a time), I noticed
+that the fluctuations would happen, but were relatively infrequent,
+which gave me confidence. However, to offset this slight statistical
+issue, I ran each test 5 times. This is reflected in the appendix.
+
+\hypertarget{the-second-task}{%
+\subsubsection{The second task}\label{the-second-task}}
+
+The second task after getting the most popular colours in an image was
+to find the ``peak'' color. This is a simple matter of picking the
+highest-counted color in the image.
+
+I then proceeded to match each ``peak'' color to a ``named'' color. The
+``named'' colors were pulled from a massive list of color names and hex
+values found on Wikipedia. You can view these many lists
+\href{https://en.wikipedia.org/wiki/Lists_of_colors}{here}.
+
+I simply did this for my own amusement. I like when colors have names.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ Peak(peaked_color, fname):}
+\NormalTok{    r }\OperatorTok{=}\NormalTok{ [}\BuiltInTok{int}\NormalTok{(}\BuiltInTok{hex}\NormalTok{[}\DecValTok{0}\NormalTok{:}\DecValTok{2}\NormalTok{], }\DecValTok{16}\NormalTok{) }\ControlFlowTok{for} \BuiltInTok{hex} \KeywordTok{in}\NormalTok{ hex_rgb_colors] }
+    \CommentTok{# Red elements}
+\NormalTok{    g }\OperatorTok{=}\NormalTok{ [}\BuiltInTok{int}\NormalTok{(}\BuiltInTok{hex}\NormalTok{[}\DecValTok{2}\NormalTok{:}\DecValTok{4}\NormalTok{], }\DecValTok{16}\NormalTok{) }\ControlFlowTok{for} \BuiltInTok{hex} \KeywordTok{in}\NormalTok{ hex_rgb_colors] }
+    \CommentTok{# Green elements}
+\NormalTok{    b }\OperatorTok{=}\NormalTok{ [}\BuiltInTok{int}\NormalTok{(}\BuiltInTok{hex}\NormalTok{[}\DecValTok{4}\NormalTok{:}\DecValTok{6}\NormalTok{], }\DecValTok{16}\NormalTok{) }\ControlFlowTok{for} \BuiltInTok{hex} \KeywordTok{in}\NormalTok{ hex_rgb_colors] }
+    \CommentTok{# Blue elements}
+
+\NormalTok{    r }\OperatorTok{=}\NormalTok{ np.asarray(r, np.uint8)}
+\NormalTok{    g }\OperatorTok{=}\NormalTok{ np.asarray(g, np.uint8)}
+\NormalTok{    b }\OperatorTok{=}\NormalTok{ np.asarray(b, np.uint8)}
+
+\NormalTok{    rgb }\OperatorTok{=}\NormalTok{ np.dstack((r, g, b))}
+
+\NormalTok{    lab }\OperatorTok{=}\NormalTok{ rgb2lab(rgb)}
+
+\NormalTok{    peaked_rgb }\OperatorTok{=}\NormalTok{ np.asarray([}\BuiltInTok{int}\NormalTok{(peaked_color[}\DecValTok{1}\NormalTok{:}\DecValTok{3}\NormalTok{], }\DecValTok{16}\NormalTok{), }
+    \BuiltInTok{int}\NormalTok{(peaked_color[}\DecValTok{3}\NormalTok{:}\DecValTok{5}\NormalTok{], }\DecValTok{16}\NormalTok{,), }\BuiltInTok{int}\NormalTok{(peaked_color[}\DecValTok{5}\NormalTok{:}\DecValTok{7}\NormalTok{], }
+        \DecValTok{16}\NormalTok{)], np.uint8)}
+\NormalTok{    peaked_rgb }\OperatorTok{=}\NormalTok{ np.dstack((peaked_rgb[}\DecValTok{0}\NormalTok{], peaked_rgb[}\DecValTok{1}\NormalTok{], }
+\NormalTok{        peaked_rgb[}\DecValTok{2}\NormalTok{]))}
+\NormalTok{    peaked_lab }\OperatorTok{=}\NormalTok{ rgb2lab(peaked_rgb)}
+
+    \CommentTok{# Compute Euclidean distance}
+\NormalTok{    lab_dist }\OperatorTok{=}\NormalTok{ ((lab[:,:,}\DecValTok{0}\NormalTok{] }\OperatorTok{-}\NormalTok{ peaked_lab[:,:,}\DecValTok{0}\NormalTok{])}\OperatorTok{**}\DecValTok{2} \OperatorTok{+} 
+\NormalTok{        (lab[:,:,}\DecValTok{1}\NormalTok{] }\OperatorTok{-}\NormalTok{ peaked_lab[:,:,}\DecValTok{1}\NormalTok{])}\OperatorTok{**}\DecValTok{2} \OperatorTok{+}\NormalTok{ (lab[:,:,}\DecValTok{2}\NormalTok{] }\OperatorTok{-} 
+\NormalTok{        peaked_lab[:,:,}\DecValTok{2}\NormalTok{])}\OperatorTok{**}\DecValTok{2}\NormalTok{)}\OperatorTok{**}\FloatTok{0.5}
+
+    \CommentTok{# Get index of min distance}
+\NormalTok{    min_index }\OperatorTok{=}\NormalTok{ lab_dist.argmin()}
+
+    \CommentTok{# Get the hex string of the color with the minimum Euclidean distance }
+\NormalTok{    peaked_closest_hex }\OperatorTok{=}\NormalTok{ hex_rgb_colors[min_index]}
+
+    \CommentTok{# Get the color name from the dictionary}
+\NormalTok{    peaked_color_name }\OperatorTok{=}\NormalTok{ colors_dict[peaked_closest_hex]}
+
+\NormalTok{    peaked_color_rgb }\OperatorTok{=}\NormalTok{ HEX2RGB(peaked_color)}
+\NormalTok{    closest_match }\OperatorTok{=}\NormalTok{ HEX2RGB(}\BuiltInTok{list}\NormalTok{(colors_dict.keys())}
+\NormalTok{        [}\BuiltInTok{list}\NormalTok{(colors_dict.values()).index(peaked_color_name)])}
+
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"Peaked color name: }\SpecialCharTok{\{}\NormalTok{peaked_color_name}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+
+\NormalTok{    h, s, v }\OperatorTok{=}\NormalTok{ RGB2HSV(peaked_closest_hex)}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"The top color is }\SpecialCharTok{\{}\NormalTok{peaked_color_name}\SpecialCharTok{\}}\SpecialStringTok{. }
+\SpecialStringTok{        Its HSV is }\SpecialCharTok{\{h\}}\SpecialStringTok{, }\SpecialCharTok{\{s\}}\SpecialStringTok{, }\SpecialCharTok{\{v\}}\SpecialStringTok{."}\NormalTok{)}
+\NormalTok{    colorFamily }\OperatorTok{=}\NormalTok{ determinedColorFamily(h, s, v)}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"The determined color family of }
+\SpecialStringTok{        }\SpecialCharTok{\{}\NormalTok{peaked_color_name}\SpecialCharTok{\}}\SpecialStringTok{ is }\SpecialCharTok{\{}\NormalTok{colorFamily}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"R: }\SpecialCharTok{\{}\NormalTok{peaked_color_rgb[}\DecValTok{0}\NormalTok{]}\SpecialCharTok{\}}\SpecialStringTok{, G: }
+\SpecialStringTok{        }\SpecialCharTok{\{}\NormalTok{peaked_color_rgb[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{\}}\SpecialStringTok{, B: }\SpecialCharTok{\{}\NormalTok{peaked_color_rgb[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"R: }\SpecialCharTok{\{}\NormalTok{closest_match[}\DecValTok{0}\NormalTok{]}\SpecialCharTok{\}}\SpecialStringTok{, G: }\SpecialCharTok{\{}\NormalTok{closest_match[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{\}}\SpecialStringTok{, }
+\SpecialStringTok{        B: }\SpecialCharTok{\{}\NormalTok{closest_match[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+
+\NormalTok{    fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots(nrows}\OperatorTok{=}\DecValTok{1}\NormalTok{, ncols}\OperatorTok{=}\DecValTok{2}\NormalTok{)}
+
+\NormalTok{    Z }\OperatorTok{=}\NormalTok{ np.vstack([peaked_color_rgb[}\DecValTok{0}\NormalTok{], peaked_color_rgb[}\DecValTok{1}\NormalTok{],}
+\NormalTok{        peaked_color_rgb[}\DecValTok{2}\NormalTok{]])}
+\NormalTok{    Y }\OperatorTok{=}\NormalTok{ np.vstack([closest_match[}\DecValTok{0}\NormalTok{], closest_match[}\DecValTok{1}\NormalTok{], }
+\NormalTok{        closest_match[}\DecValTok{2}\NormalTok{]])}
+
+\NormalTok{    ax[}\DecValTok{0}\NormalTok{].set_title(}\SpecialStringTok{f'Color from image: }\SpecialCharTok{\{}\NormalTok{peaked_color_rgb[}\DecValTok{0}\NormalTok{]}\SpecialCharTok{\}}
+\SpecialStringTok{        ,}\SpecialCharTok{\{}\NormalTok{peaked_color_rgb[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{\}}\SpecialStringTok{,}\SpecialCharTok{\{}\NormalTok{peaked_color_rgb[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{\}}\SpecialStringTok{'}\NormalTok{, fontsize}\OperatorTok{=}\DecValTok{12}\NormalTok{)}
+\NormalTok{    ax[}\DecValTok{0}\NormalTok{].imshow(np.dstack(Z), interpolation }\OperatorTok{=} \StringTok{'none'}\NormalTok{, aspect }\OperatorTok{=} \StringTok{'auto'}\NormalTok{)}
+
+\NormalTok{    ax[}\DecValTok{1}\NormalTok{].set_title(}\SpecialStringTok{f'Color matched to }\SpecialCharTok{\{}\NormalTok{closest_match[}\DecValTok{0}\NormalTok{]}\SpecialCharTok{\}}\SpecialStringTok{,}
+\SpecialStringTok{        }\SpecialCharTok{\{}\NormalTok{closest_match[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{\}}\SpecialStringTok{,}\SpecialCharTok{\{}\NormalTok{closest_match[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{\}}\SpecialStringTok{'}\NormalTok{, fontsize}\OperatorTok{=}\DecValTok{12}\NormalTok{)}
+\NormalTok{    ax[}\DecValTok{1}\NormalTok{].imshow(np.dstack(Y), interpolation }\OperatorTok{=} \StringTok{'none'}\NormalTok{, aspect }\OperatorTok{=} \StringTok{'auto'}\NormalTok{)}
+
+\NormalTok{    fig.suptitle(}\SpecialStringTok{f"Peaked color name: }\SpecialCharTok{\{}\NormalTok{peaked_color_name}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{, fontsize}\OperatorTok{=}\DecValTok{16}\NormalTok{)}
+
+\NormalTok{    ax[}\DecValTok{0}\NormalTok{].axis(}\StringTok{'off'}\NormalTok{)}
+\NormalTok{    ax[}\DecValTok{0}\NormalTok{].grid(b}\OperatorTok{=}\VariableTok{None}\NormalTok{)}
+\NormalTok{    ax[}\DecValTok{1}\NormalTok{].axis(}\StringTok{'off'}\NormalTok{)}
+\NormalTok{    ax[}\DecValTok{1}\NormalTok{].grid(b}\OperatorTok{=}\VariableTok{None}\NormalTok{)}
+\NormalTok{    plt.savefig(}\SpecialStringTok{f"./analyzed2/peaks/}\SpecialCharTok{\{}\NormalTok{fname}\SpecialCharTok{\}}\SpecialStringTok{.jpg"}\NormalTok{)}
+\NormalTok{    plt.close()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{the-third-task}{%
+\subsubsection{The third task}\label{the-third-task}}
+
+The final task I wanted to accomplish was to actually count how many
+times a popular colour appeared over the entire dataset. I opted to use
+the HSV color space to figure this out.
+
+Because each of my named colours has a known and consistent hex value, I
+decided to cluster those instead of the actual peak color. Judging from
+my own results, the peak color is typically ``close enough'' to the
+point that I feel comfortable in this decision.
+
+To convert colors from the RGB colorspace to the HSV colorspace, I used
+the following algorithm:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ RGB2HSV(color):}
+\NormalTok{    r, g, b }\OperatorTok{=}\NormalTok{ HEX2RGB(color)}
+
+    \CommentTok{# Convert RGB values to percentages}
+\NormalTok{    r }\OperatorTok{=}\NormalTok{ r }\OperatorTok{/} \DecValTok{255}
+\NormalTok{    g }\OperatorTok{=}\NormalTok{ g }\OperatorTok{/} \DecValTok{255}
+\NormalTok{    b }\OperatorTok{=}\NormalTok{ b }\OperatorTok{/} \DecValTok{255}
+
+    \CommentTok{# calculate a few basic values; the max of r, g, b, }
+    \CommentTok{# the min value, and the difference between the two (chroma)}
+\NormalTok{    maxRGB }\OperatorTok{=} \BuiltInTok{max}\NormalTok{(r, g, b)}
+\NormalTok{    minRGB }\OperatorTok{=} \BuiltInTok{min}\NormalTok{(r, g, b)}
+
+\NormalTok{    chroma }\OperatorTok{=}\NormalTok{ maxRGB }\OperatorTok{-}\NormalTok{ minRGB}
+    
+    \CommentTok{# value (brightness) is easiest to calculate,}
+    \CommentTok{# it's simply the highest value among the r, g, b components}
+    \CommentTok{# multiply by 100 to turn the decimal into a percent}
+\NormalTok{    computedValue }\OperatorTok{=} \DecValTok{100} \OperatorTok{*}\NormalTok{ maxRGB}
+
+    \CommentTok{# there's a special case for hueless (equal parts RGB make}
+    \CommentTok{#    black, white, or grey)}
+    \CommentTok{# note that hue is technically undefined when chroma is 0}
+    \CommentTok{# as attempting to calc it would simply cause a division by 0}
+    \CommentTok{#    error, so most applications}
+    \CommentTok{# simply sub a hue of 0}
+    \CommentTok{# Saturation will always be 0 in this case}
+    \ControlFlowTok{if}\NormalTok{ chroma }\OperatorTok{==} \DecValTok{0}\NormalTok{:}
+        \ControlFlowTok{return} \DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, computedValue}
+
+    \CommentTok{# Saturation is also simple to compute, as it is chroma/value}
+\NormalTok{    computedSaturation }\OperatorTok{=} \DecValTok{100} \OperatorTok{*}\NormalTok{ (chroma}\OperatorTok{/}\NormalTok{maxRGB)}
+
+    \CommentTok{# Calculate hue}
+    \CommentTok{# Hue is calculated via "chromacity" represented as a }
+    \CommentTok{#    2D hexagon, divided into six 60-deg sectors}
+    \CommentTok{# we calculate the bisecting angle as a value 0 <= x < 6, }
+    \CommentTok{#    which represents which protion}
+    \CommentTok{# of the sector the line falls on}
+    \ControlFlowTok{if}\NormalTok{ r }\OperatorTok{==}\NormalTok{ minRGB:}
+\NormalTok{        h }\OperatorTok{=} \DecValTok{3} \OperatorTok{-}\NormalTok{ ((g }\OperatorTok{-}\NormalTok{ b) }\OperatorTok{/}\NormalTok{ chroma)}
+    \ControlFlowTok{elif}\NormalTok{ b }\OperatorTok{==}\NormalTok{ minRGB:}
+\NormalTok{        h }\OperatorTok{=} \DecValTok{1} \OperatorTok{-}\NormalTok{ ((r }\OperatorTok{-}\NormalTok{ g) }\OperatorTok{/}\NormalTok{ chroma)}
+    \ControlFlowTok{else}\NormalTok{:}
+\NormalTok{        h }\OperatorTok{=} \DecValTok{5} \OperatorTok{-}\NormalTok{ ((b }\OperatorTok{-}\NormalTok{ r) }\OperatorTok{/}\NormalTok{ chroma)}
+
+    \CommentTok{# After we have each sector position, we multiply it by }
+    \CommentTok{# the size of each sector's arc to obtain the angle in degrees}
+\NormalTok{    computedHue }\OperatorTok{=} \DecValTok{60} \OperatorTok{*}\NormalTok{ h}
+
+    \ControlFlowTok{return}\NormalTok{ computedHue, computedSaturation, computedValue}
+\end{Highlighting}
+\end{Shaded}
+
+The function returns a tuple that consists of the calculated hue,
+saturation, and value.
+
+After this was acquired, I could then simply classify each color based
+on its HSV. I used the following HSV chart to help me match my named
+colors to a more general ``color family.''
+
+\begin{figure}
+\centering
+\includegraphics{PKjgfFXm.png}
+\end{figure}
+
+By using this chart, I was able to then construct a method that consists
+of an increasingly painful chain of if/else if statements to then tally
+each braod color family.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ determinedColorFamily(hue, sat, val):}
+    \ControlFlowTok{if}\NormalTok{ hue }\OperatorTok{==} \DecValTok{0} \KeywordTok{and}\NormalTok{ sat }\OperatorTok{==} \DecValTok{0}\NormalTok{:}
+        \ControlFlowTok{if}\NormalTok{ val }\OperatorTok{>=} \DecValTok{95}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"white"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"white"}
+        \ControlFlowTok{elif} \DecValTok{15} \OperatorTok{<=}\NormalTok{ val }\OperatorTok{<} \DecValTok{95}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"grey"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"grey"}
+        \ControlFlowTok{else}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"black"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"black"}
+    \ControlFlowTok{elif} \DecValTok{0} \OperatorTok{<=}\NormalTok{ val }\OperatorTok{<} \DecValTok{15}\NormalTok{:}
+\NormalTok{        families_dict[}\StringTok{"black"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+        \ControlFlowTok{return} \StringTok{"black"}
+    \ControlFlowTok{elif} \DecValTok{99} \OperatorTok{<=}\NormalTok{ val }\OperatorTok{<=} \DecValTok{100} \KeywordTok{and} \DecValTok{0} \OperatorTok{<=}\NormalTok{ sat }\OperatorTok{<} \DecValTok{5}\NormalTok{:}
+\NormalTok{        families_dict[}\StringTok{"white"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+        \ControlFlowTok{return} \StringTok{"white"}
+    \ControlFlowTok{elif} \DecValTok{5} \OperatorTok{<=}\NormalTok{ sat }\OperatorTok{<=} \DecValTok{100}\NormalTok{:}
+        \ControlFlowTok{if} \DecValTok{0} \OperatorTok{<=}\NormalTok{ hue }\OperatorTok{<} \DecValTok{15}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"red"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"red"}
+        \ControlFlowTok{elif} \DecValTok{15} \OperatorTok{<=}\NormalTok{ hue }\OperatorTok{<} \DecValTok{30}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"warm red"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"warm red"}
+        \ControlFlowTok{elif} \DecValTok{30} \OperatorTok{<=}\NormalTok{ hue }\OperatorTok{<} \DecValTok{45}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"orange"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"orange"}
+        \ControlFlowTok{elif} \DecValTok{45} \OperatorTok{<=}\NormalTok{ hue }\OperatorTok{<} \DecValTok{60}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"warm yellow"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"warm yellow"}
+        \ControlFlowTok{elif} \DecValTok{60} \OperatorTok{<=}\NormalTok{ hue }\OperatorTok{<} \DecValTok{75}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"yellow"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"yellow"}
+        \ControlFlowTok{elif} \DecValTok{75} \OperatorTok{<=}\NormalTok{ hue }\OperatorTok{<} \DecValTok{90}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"cool yellow"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"cool yellow"}
+        \ControlFlowTok{elif} \DecValTok{90} \OperatorTok{<=}\NormalTok{ hue }\OperatorTok{<} \DecValTok{105}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"yellow green"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"yellow green"}
+        \ControlFlowTok{elif} \DecValTok{105} \OperatorTok{<=}\NormalTok{ hue }\OperatorTok{<} \DecValTok{120}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"warm green"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"warm green"}
+        \ControlFlowTok{elif} \DecValTok{120} \OperatorTok{<=}\NormalTok{ hue }\OperatorTok{<} \DecValTok{135}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"green"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"green"}
+        \ControlFlowTok{elif} \DecValTok{135} \OperatorTok{<=}\NormalTok{ hue }\OperatorTok{<} \DecValTok{150}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"cool green"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"cool green"}
+        \ControlFlowTok{elif} \DecValTok{150} \OperatorTok{<=}\NormalTok{ hue }\OperatorTok{<} \DecValTok{165}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"green cyan"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"green cyan"}
+        \ControlFlowTok{elif} \DecValTok{165} \OperatorTok{<=}\NormalTok{ hue }\OperatorTok{<} \DecValTok{180}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"warm cyan"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"warm cyan"}
+        \ControlFlowTok{elif} \DecValTok{180} \OperatorTok{<=}\NormalTok{ hue }\OperatorTok{<} \DecValTok{195}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"cyan"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"cyan"}
+        \ControlFlowTok{elif} \DecValTok{195} \OperatorTok{<=}\NormalTok{ hue }\OperatorTok{<} \DecValTok{210}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"cool cyan"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"cool cyan"}
+        \ControlFlowTok{elif} \DecValTok{210} \OperatorTok{<=}\NormalTok{ hue }\OperatorTok{<} \DecValTok{225}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"blue cyan"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"blue cyan"}
+        \ControlFlowTok{elif} \DecValTok{225} \OperatorTok{<=}\NormalTok{ hue }\OperatorTok{<} \DecValTok{240}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"cool blue"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"cool blue"}
+        \ControlFlowTok{elif} \DecValTok{240} \OperatorTok{<=}\NormalTok{ hue }\OperatorTok{<} \DecValTok{255}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"blue"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"blue"}
+        \ControlFlowTok{elif} \DecValTok{255} \OperatorTok{<=}\NormalTok{ hue }\OperatorTok{<} \DecValTok{270}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"warm blue"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"warm blue"}
+        \ControlFlowTok{elif} \DecValTok{270} \OperatorTok{<=}\NormalTok{ hue }\OperatorTok{<} \DecValTok{285}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"violet"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"violet"}
+        \ControlFlowTok{elif} \DecValTok{285} \OperatorTok{<=}\NormalTok{ hue }\OperatorTok{<} \DecValTok{300}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"cool magenta"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"cool magenta"}
+        \ControlFlowTok{elif} \DecValTok{300} \OperatorTok{<=}\NormalTok{ hue }\OperatorTok{<} \DecValTok{315}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"magenta"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"magenta"}
+        \ControlFlowTok{elif} \DecValTok{315} \OperatorTok{<=}\NormalTok{ hue }\OperatorTok{<} \DecValTok{330}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"warm magenta"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"warm magenta"}
+        \ControlFlowTok{elif} \DecValTok{330} \OperatorTok{<=}\NormalTok{ hue }\OperatorTok{<} \DecValTok{345}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"red magenta"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"red magenta"}
+        \ControlFlowTok{elif} \DecValTok{345} \OperatorTok{<=}\NormalTok{ hue }\OperatorTok{<=} \DecValTok{360}\NormalTok{:}
+\NormalTok{            families_dict[}\StringTok{"cool red"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return} \StringTok{"cool red"}
+    \ControlFlowTok{elif} \DecValTok{0} \OperatorTok{<=}\NormalTok{ sat }\OperatorTok{<} \DecValTok{5}\NormalTok{:}
+\NormalTok{        families_dict[}\StringTok{"grey"}\NormalTok{] }\OperatorTok{+=} \DecValTok{1}
+        \ControlFlowTok{return} \StringTok{"grey"}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{and-thats-pretty-much-it.}{%
+\subsubsection{And that's pretty much
+it.}\label{and-thats-pretty-much-it.}}
+
+After all was said and done, I created another simple script which just
+took the saved data from each run and averaged each result. The final
+graph looks like this:
+
+\begin{landscape}
+\begin{figure}
+\centering
+\includegraphics[width=8in]{./analyzed2/average_analysis.jpg}
+\end{figure}
+\end{landscape}
+
+And the final counts, since it may be a bit difficult to determine just
+from looking at the graph any exact numbers:
+
+\begin{itemize}
+\tightlist
+\item
+  White: 4
+\item
+  Grey: 17
+\item
+  Black: 91
+\item
+  Red: 73
+\item
+  Warm Red: 53
+\item
+  Orange: 30
+\item
+  Warm yellow: 12
+\item
+  Yellow: 3
+\item
+  Cool Yellow: 6
+\item
+  Yellow Green: 6
+\item
+  Warm Green: 0
+\item
+  Green: 2
+\item
+  Cool Green: 4
+\item
+  Green Cyan: 7
+\item
+  Warm Cyan: 5
+\item
+  Cyan: 18
+\item
+  Cool Cyan: 25
+\item
+  Blue Cyan: 18
+\item
+  Cool Blue: 14
+\item
+  Blue: 5
+\item
+  Warm Blue: 1
+\item
+  Violet: 3
+\item
+  Cool Magenta: 12
+\item
+  Magenta: 4
+\item
+  Warm Magenta: 5
+\item
+  Red Magenta: 7
+\item
+  Cool Red: 16
+\end{itemize}
+
+Overall, would I say I agree with these results? Yeah. I tend to use a
+lot of dark colours, and in my classifications I did cluster anything
+that I deemed ``very very dark'' to be ``black.'' This is a general
+assumption that I feel many viewers may make.
+
+\hypertarget{appendix}{%
+\subsection{Appendix}\label{appendix}}
+
+The following code will generate images using matplotlib that hold the
+source image, each image's 5 pie charts, and each image's 5 peaks.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{def} \PY{n+nf}{get\PYZus{}image}\PY{p}{(}\PY{n}{image\PYZus{}path}\PY{p}{)}\PY{p}{:}
+            \PY{n}{image} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{imread}\PY{p}{(}\PY{n}{image\PYZus{}path}\PY{p}{)}
+            \PY{c+c1}{\PYZsh{} By default, OpenCV reads image sequence as BGR}
+            \PY{c+c1}{\PYZsh{} To view the actual image we need to convert}
+            \PY{c+c1}{\PYZsh{} to RGB}
+            \PY{n}{image} \PY{o}{=} \PY{n}{cv2}\PY{o}{.}\PY{n}{cvtColor}\PY{p}{(}\PY{n}{image}\PY{p}{,} \PY{n}{cv2}\PY{o}{.}\PY{n}{COLOR\PYZus{}BGR2RGB}\PY{p}{)}
+            \PY{k}{return} \PY{n}{image}
+        
+        \PY{n}{c} \PY{o}{=} \PY{l+m+mi}{0}
+        \PY{k}{for} \PY{n}{filename} \PY{o+ow}{in} \PY{n}{os}\PY{o}{.}\PY{n}{listdir}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{./data}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:}
+            \PY{k}{if} \PY{n}{filename}\PY{o}{.}\PY{n}{endswith}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{.jpg}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:}
+                \PY{n}{image} \PY{o}{=} \PY{n}{get\PYZus{}image}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./data/}\PY{l+s+si}{\PYZob{}filename\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                
+                \PY{n}{fname} \PY{o}{=} \PY{n+nb}{str}\PY{p}{(}\PY{n}{c}\PY{p}{)} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{.jpg}\PY{l+s+s2}{\PYZdq{}}
+                \PY{n}{c} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                
+                \PY{n}{first\PYZus{}pie} \PY{o}{=} \PY{n}{get\PYZus{}image}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./data\PYZus{}runs/first/piecharts/}\PY{l+s+si}{\PYZob{}fname\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                \PY{n}{second\PYZus{}pie} \PY{o}{=} \PY{n}{get\PYZus{}image}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./data\PYZus{}runs/second/piecharts/}\PY{l+s+si}{\PYZob{}fname\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                \PY{n}{third\PYZus{}pie} \PY{o}{=} \PY{n}{get\PYZus{}image}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./data\PYZus{}runs/third/piecharts/}\PY{l+s+si}{\PYZob{}fname\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                \PY{n}{fourth\PYZus{}pie} \PY{o}{=} \PY{n}{get\PYZus{}image}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./data\PYZus{}runs/fourth/piecharts/}\PY{l+s+si}{\PYZob{}fname\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                \PY{n}{fifth\PYZus{}pie} \PY{o}{=} \PY{n}{get\PYZus{}image}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./data\PYZus{}runs/fifth/piecharts/}\PY{l+s+si}{\PYZob{}fname\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                
+                \PY{n}{first\PYZus{}peak} \PY{o}{=} \PY{n}{get\PYZus{}image}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./data\PYZus{}runs/first/peaks/}\PY{l+s+si}{\PYZob{}fname\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                \PY{n}{second\PYZus{}peak} \PY{o}{=} \PY{n}{get\PYZus{}image}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./data\PYZus{}runs/second/peaks/}\PY{l+s+si}{\PYZob{}fname\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                \PY{n}{third\PYZus{}peak} \PY{o}{=} \PY{n}{get\PYZus{}image}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./data\PYZus{}runs/third/peaks/}\PY{l+s+si}{\PYZob{}fname\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                \PY{n}{fourth\PYZus{}peak} \PY{o}{=} \PY{n}{get\PYZus{}image}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./data\PYZus{}runs/fourth/peaks/}\PY{l+s+si}{\PYZob{}fname\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                \PY{n}{fifth\PYZus{}peak} \PY{o}{=} \PY{n}{get\PYZus{}image}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./data\PYZus{}runs/fifth/peaks/}\PY{l+s+si}{\PYZob{}fname\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                
+                \PY{n}{pie\PYZus{}images} \PY{o}{=} \PY{p}{[}\PY{n}{first\PYZus{}pie}\PY{p}{,} \PY{n}{second\PYZus{}pie}\PY{p}{,} \PY{n}{third\PYZus{}pie}\PY{p}{,} \PY{n}{fourth\PYZus{}pie}\PY{p}{,} \PY{n}{fifth\PYZus{}pie}\PY{p}{]}
+                \PY{n}{peak\PYZus{}images} \PY{o}{=} \PY{p}{[}\PY{n}{first\PYZus{}peak}\PY{p}{,} \PY{n}{second\PYZus{}peak}\PY{p}{,} \PY{n}{third\PYZus{}peak}\PY{p}{,} \PY{n}{fourth\PYZus{}peak}\PY{p}{,} \PY{n}{fifth\PYZus{}peak}\PY{p}{]}
+                    
+                \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{p}{)}
+                    
+                \PY{n}{implot} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{image}\PY{p}{)}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{off}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{n}{b}\PY{o}{=}\PY{k+kc}{None}\PY{p}{)}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{199}\PY{p}{)}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{n}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{./nbimg/}\PY{l+s+si}{\PYZob{}filename\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+                
+                
+                \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{pie\PYZus{}images}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{pie\PYZus{}images}\PY{p}{)}\PY{p}{,} \PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+                    \PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{off}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                    \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{n}{b}\PY{o}{=}\PY{k+kc}{None}\PY{p}{)}
+                    \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{pie\PYZus{}images}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{199}\PY{p}{)}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{n}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{./nbimg/pie\PYZhy{}}\PY{l+s+si}{\PYZob{}fname\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+                                       
+                \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{peak\PYZus{}images}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{peak\PYZus{}images}\PY{p}{)}\PY{p}{,} \PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+                    \PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{off}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                    \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{n}{b}\PY{o}{=}\PY{k+kc}{None}\PY{p}{)}
+                    \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{peak\PYZus{}images}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{199}\PY{p}{)}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{n}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{./nbimg/peak\PYZhy{}}\PY{l+s+si}{\PYZob{}fname\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+            
+                
+                
+\end{Verbatim}
+
+\begin{landscape}
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (1).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-0.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-0.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (10).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-1.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-1.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (100).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-2.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-2.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (101).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-3.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-3.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (102).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-4.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-4.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (103).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-5.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-5.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (104).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-6.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-6.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (105).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-7.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-7.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (106).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-8.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-8.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (107).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-9.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-9.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (108).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-10.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-10.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (109).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-11.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-11.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (11).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-12.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-12.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (110).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-13.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-13.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (111).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-14.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-14.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (112).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-15.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-15.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (113).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-16.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-16.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (114).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-17.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-17.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (115).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-18.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-18.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (116).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-19.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-19.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (117).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-20.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-20.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (118).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-21.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-21.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (119).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-22.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-22.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (12).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-23.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-23.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (120).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-24.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-24.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (121).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-25.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-25.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (122).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-26.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-26.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (123).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-27.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-27.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (124).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-28.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-28.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (125).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-29.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-29.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (126).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-30.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-30.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (127).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-31.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-31.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (128).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-32.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-32.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (129).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-33.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-33.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (13).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-34.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-34.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (130).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-35.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-35.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (131).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-36.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-36.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (132).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-37.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-37.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (133).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-38.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-38.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (134).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-39.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-39.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (135).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-40.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-40.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (136).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-41.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-41.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (137).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-42.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-42.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (138).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-43.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-43.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (139).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-44.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-44.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (14).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-45.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-45.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (140).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-46.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-46.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (141).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-47.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-47.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (142).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-48.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-48.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (143).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-49.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-49.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (144).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-50.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-50.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (145).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-51.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-51.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (146).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-52.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-52.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (147).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-53.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-53.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (148).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-54.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-54.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (149).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-55.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-55.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (15).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-56.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-56.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (150).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-57.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-57.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (151).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-58.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-58.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (152).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-59.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-59.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (153).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-60.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-60.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (154).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-61.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-61.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (155).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-62.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-62.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (156).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-63.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-63.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (157).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-64.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-64.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (158).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-65.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-65.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (159).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-66.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-66.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (16).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-67.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-67.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (160).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-68.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-68.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (161).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-69.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-69.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (162).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-70.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-70.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (163).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-71.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-71.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (164).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-72.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-72.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (165).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-73.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-73.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (166).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-74.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-74.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (167).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-75.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-75.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (168).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-76.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-76.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (169).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-77.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-77.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (17).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-78.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-78.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (170).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-79.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-79.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (171).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-80.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-80.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (172).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-81.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-81.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (173).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-82.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-82.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (174).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-83.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-83.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (175).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-84.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-84.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (176).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-85.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-85.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (177).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-86.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-86.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (178).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-87.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-87.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (179).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-88.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-88.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (18).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-89.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-89.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (180).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-90.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-90.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (181).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-91.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-91.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (182).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-92.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-92.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (183).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-93.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-93.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (184).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-94.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-94.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (185).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-95.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-95.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (186).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-96.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-96.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (187).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-97.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-97.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (188).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-98.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-98.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (189).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-99.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-99.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (19).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-100.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-100.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (190).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-101.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-101.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (191).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-102.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-102.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (192).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-103.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-103.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (193).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-104.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-104.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (194).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-105.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-105.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (195).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-106.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-106.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (196).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-107.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-107.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (197).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-108.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-108.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (198).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-109.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-109.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (199).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-110.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-110.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (2).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-111.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-111.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (20).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-112.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-112.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (200).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-113.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-113.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (201).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-114.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-114.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (202).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-115.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-115.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (203).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-116.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-116.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (204).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-117.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-117.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (205).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-118.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-118.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (206).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-119.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-119.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (207).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-120.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-120.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (208).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-121.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-121.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (209).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-122.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-122.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (21).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-123.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-123.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (210).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-124.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-124.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (211).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-125.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-125.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (212).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-126.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-126.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (213).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-127.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-127.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (214).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-128.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-128.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (215).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-129.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-129.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (216).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-130.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-130.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (217).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-131.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-131.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (218).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-132.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-132.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (219).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-133.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-133.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (22).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-134.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-134.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (220).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-135.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-135.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (221).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-136.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-136.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (222).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-137.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-137.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (223).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-138.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-138.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (224).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-139.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-139.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (225).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-140.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-140.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (226).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-141.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-141.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (227).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-142.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-142.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (228).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-143.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-143.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (229).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-144.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-144.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (23).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-145.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-145.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (230).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-146.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-146.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (231).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-147.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-147.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (232).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-148.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-148.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (233).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-149.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-149.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (234).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-150.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-150.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (235).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-151.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-151.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (236).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-152.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-152.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (237).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-153.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-153.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (238).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-154.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-154.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (239).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-155.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-155.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (24).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-156.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-156.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (240).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-157.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-157.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (241).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-158.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-158.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (242).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-159.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-159.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (243).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-160.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-160.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (244).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-161.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-161.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (245).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-162.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-162.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (246).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-163.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-163.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (247).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-164.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-164.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (248).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-165.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-165.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (249).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-166.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-166.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (25).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-167.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-167.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (250).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-168.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-168.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (251).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-169.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-169.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (252).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-170.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-170.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (253).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-171.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-171.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (254).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-172.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-172.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (255).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-173.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-173.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (256).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-174.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-174.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (257).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-175.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-175.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (258).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-176.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-176.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (259).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-177.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-177.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (26).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-178.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-178.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (260).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-179.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-179.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (261).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-180.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-180.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (262).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-181.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-181.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (263).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-182.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-182.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (264).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-183.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-183.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (265).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-184.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-184.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (266).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-185.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-185.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (267).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-186.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-186.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (268).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-187.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-187.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (269).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-188.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-188.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (27).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-189.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-189.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (270).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-190.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-190.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (271).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-191.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-191.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (272).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-192.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-192.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (273).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-193.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-193.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (274).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-194.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-194.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (275).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-195.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-195.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (276).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-196.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-196.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (277).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-197.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-197.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (278).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-198.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-198.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (279).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-199.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-199.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (28).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-200.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-200.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (280).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-201.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-201.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (281).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-202.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-202.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (282).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-203.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-203.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (283).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-204.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-204.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (284).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-205.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-205.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (285).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-206.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-206.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (286).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-207.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-207.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (287).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-208.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-208.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (288).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-209.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-209.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (289).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-210.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-210.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (29).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-211.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-211.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (290).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-212.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-212.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (291).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-213.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-213.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (292).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-214.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-214.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (293).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-215.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-215.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (294).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-216.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-216.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (295).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-217.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-217.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (296).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-218.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-218.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (297).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-219.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-219.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (298).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-220.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-220.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (299).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-221.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-221.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (3).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-222.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-222.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (30).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-223.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-223.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (300).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-224.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-224.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (301).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-225.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-225.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (302).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-226.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-226.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (303).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-227.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-227.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (304).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-228.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-228.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (305).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-229.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-229.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (306).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-230.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-230.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (307).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-231.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-231.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (308).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-232.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-232.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (309).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-233.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-233.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (31).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-234.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-234.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (310).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-235.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-235.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (311).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-236.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-236.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (312).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-237.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-237.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (313).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-238.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-238.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (314).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-239.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-239.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (315).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-240.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-240.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (316).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-241.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-241.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (317).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-242.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-242.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (318).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-243.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-243.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (319).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-244.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-244.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (32).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-245.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-245.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (320).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-246.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-246.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (321).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-247.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-247.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (322).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-248.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-248.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (323).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-249.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-249.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (324).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-250.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-250.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (325).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-251.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-251.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (326).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-252.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-252.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (327).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-253.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-253.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (328).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-254.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-254.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (329).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-255.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-255.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (33).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-256.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-256.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (330).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-257.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-257.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (331).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-258.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-258.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (332).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-259.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-259.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (333).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-260.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-260.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (334).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-261.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-261.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (335).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-262.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-262.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (336).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-263.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-263.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (337).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-264.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-264.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (338).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-265.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-265.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (339).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-266.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-266.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (34).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-267.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-267.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (340).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-268.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-268.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (341).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-269.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-269.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (342).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-270.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-270.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (343).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-271.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-271.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (344).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-272.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-272.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (345).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-273.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-273.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (346).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-274.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-274.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (347).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-275.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-275.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (348).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-276.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-276.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (349).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-277.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-277.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (35).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-278.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-278.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (350).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-279.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-279.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (351).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-280.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-280.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (352).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-281.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-281.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (353).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-282.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-282.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (354).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-283.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-283.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (355).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-284.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-284.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (356).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-285.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-285.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (357).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-286.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-286.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (358).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-287.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-287.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (359).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-288.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-288.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (36).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-289.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-289.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (360).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-290.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-290.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (361).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-291.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-291.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (362).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-292.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-292.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (363).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-293.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-293.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (364).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-294.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-294.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (365).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-295.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-295.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (366).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-296.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-296.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (367).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-297.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-297.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (368).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-298.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-298.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (369).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-299.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-299.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (37).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-300.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-300.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (370).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-301.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-301.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (371).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-302.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-302.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (372).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-303.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-303.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (373).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-304.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-304.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (374).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-305.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-305.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (375).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-306.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-306.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (376).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-307.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-307.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (377).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-308.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-308.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (378).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-309.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-309.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (379).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-310.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-310.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (38).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-311.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-311.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (380).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-312.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-312.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (381).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-313.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-313.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (382).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-314.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-314.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (383).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-315.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-315.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (384).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-316.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-316.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (385).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-317.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-317.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (386).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-318.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-318.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (387).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-319.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-319.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (388).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-320.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-320.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (389).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-321.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-321.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (39).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-322.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-322.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (390).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-323.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-323.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (391).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-324.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-324.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (392).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-325.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-325.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (393).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-326.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-326.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (394).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-327.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-327.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (395).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-328.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-328.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (396).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-329.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-329.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (397).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-330.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-330.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (398).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-331.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-331.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (399).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-332.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-332.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (4).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-333.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-333.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (40).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-334.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-334.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (400).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-335.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-335.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (401).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-336.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-336.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (402).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-337.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-337.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (403).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-338.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-338.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (404).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-339.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-339.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (405).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-340.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-340.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (406).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-341.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-341.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (407).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-342.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-342.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (408).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-343.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-343.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (409).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-344.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-344.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (41).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-345.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-345.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (410).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-346.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-346.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (411).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-347.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-347.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (412).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-348.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-348.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (413).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-349.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-349.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (414).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-350.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-350.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (415).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-351.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-351.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (416).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-352.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-352.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (417).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-353.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-353.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (418).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-354.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-354.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (419).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-355.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-355.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (42).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-356.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-356.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (420).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-357.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-357.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (421).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-358.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-358.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (422).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-359.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-359.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (423).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-360.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-360.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (424).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-361.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-361.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (425).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-362.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-362.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (426).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-363.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-363.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (427).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-364.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-364.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (428).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-365.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-365.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (429).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-366.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-366.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (43).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-367.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-367.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (430).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-368.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-368.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (431).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-369.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-369.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (432).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-370.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-370.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (433).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-371.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-371.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (434).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-372.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-372.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (435).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-373.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-373.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (436).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-374.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-374.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (437).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-375.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-375.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (438).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-376.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-376.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (439).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-377.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-377.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (44).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-378.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-378.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (440).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-379.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-379.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (441).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-380.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-380.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (442).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-381.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-381.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (443).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-382.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-382.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (444).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-383.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-383.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (445).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-384.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-384.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (446).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-385.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-385.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (447).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-386.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-386.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (448).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-387.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-387.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (449).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-388.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-388.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (45).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-389.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-389.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (450).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-390.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-390.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (451).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-391.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-391.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (46).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-392.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-392.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (47).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-393.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-393.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (48).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-394.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-394.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (49).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-395.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-395.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (5).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-396.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-396.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (50).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-397.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-397.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (51).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-398.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-398.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (52).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-399.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-399.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (53).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-400.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-400.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (54).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-401.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-401.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (55).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-402.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-402.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (56).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-403.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-403.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (57).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-404.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-404.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (58).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-405.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-405.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (59).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-406.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-406.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (6).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-407.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-407.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (60).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-408.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-408.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (61).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-409.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-409.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (62).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-410.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-410.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (63).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-411.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-411.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (64).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-412.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-412.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (65).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-413.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-413.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (66).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-414.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-414.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (67).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-415.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-415.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (68).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-416.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-416.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (69).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-417.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-417.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (7).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-418.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-418.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (70).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-419.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-419.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (71).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-420.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-420.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (72).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-421.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-421.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (73).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-422.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-422.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (74).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-423.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-423.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (75).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-424.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-424.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (76).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-425.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-425.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (77).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-426.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-426.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (78).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-427.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-427.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (79).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-428.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-428.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (8).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-429.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-429.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (80).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-430.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-430.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (81).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-431.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-431.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (82).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-432.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-432.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (83).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-433.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-433.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (84).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-434.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-434.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (85).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-435.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-435.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (86).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-436.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-436.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (87).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-437.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-437.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (88).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-438.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-438.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (89).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-439.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-439.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (9).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-440.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-440.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (90).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-441.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-441.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (91).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-442.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-442.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (92).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-443.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-443.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (93).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-444.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-444.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (94).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-445.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-445.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (95).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-446.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-446.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (96).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-447.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-447.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (97).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-448.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-448.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (98).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-449.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-449.jpg}
+    \end{center}
+    
+
+    \begin{center}
+    \includegraphics[width=\textwidth]{./nbimg/file (99).jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/pie-450.jpg}
+    \end{center}
+
+    \begin{center}
+    \includegraphics[width=250mm]{./nbimg/peak-450.jpg}
+    \end{center}
+    
+
+\end{landscape}
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
